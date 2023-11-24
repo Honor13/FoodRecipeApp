@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/recipiesFragment">
+
+    <fragment
+        android:id="@+id/recipiesFragment"
+        android:name="com.example.foodyapplication.RecipiesFragment"
+        android:label="Recipies"
+        tools:layout="@layout/fragment_recipies" />
+    <fragment
+        android:id="@+id/favoritRecipiesFragment"
+        android:name="com.example.foodyapplication.FavoritRecipiesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorit_recipies" />
+    <fragment
+        android:id="@+id/foodJokeFragment"
+        android:name="com.example.foodyapplication.FoodJokeFragment"
+        android:label="Food Joke"
+        tools:layout="@layout/fragment_food_joke" />
+</navigation>
