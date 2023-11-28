@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/lightGray"
-        tools:context=".RecipiesFragment">
+        tools:context=".ui.fragment.recipies.RecipiesFragment">
 
         <TextView
             android:id="@+id/textViewError"
