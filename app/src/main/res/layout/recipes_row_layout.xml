@@ -39,6 +39,7 @@
                     android:id="@+id/recipeImageView"
                     android:layout_width="200dp"
                     android:layout_height="0dp"
+                    loadImageFromUrl="@{result.image}"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_food_joke"
                     app:layout_constraintBottom_toBottomOf="parent"
