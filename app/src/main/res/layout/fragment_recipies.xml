@@ -13,6 +13,16 @@
         android:background="@color/lightGray"
         tools:context=".ui.fragment.recipies.RecipiesFragment">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textViewError"
             android:layout_width="wrap_content"
@@ -91,13 +101,6 @@
             </LinearLayout>
             </LinearLayout>
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 

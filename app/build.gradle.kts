@@ -76,7 +76,8 @@ dependencies {
     // Shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
 
-
+    // Coil
+    implementation("io.coil-kt:coil:2.5.0")
 
     // Jsoup
     implementation ("org.jsoup:jsoup:1.13.1")

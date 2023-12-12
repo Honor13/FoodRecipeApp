@@ -8,11 +8,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.foodyapplication.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
 
 private lateinit var binding: ActivityMainBinding
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navHostFragment: NavHostFragment
     override fun onCreate(savedInstanceState: Bundle?) {
