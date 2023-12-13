@@ -1,7 +1,5 @@
 package com.example.foodyapplication.ui.fragment.recipies
 
-import android.net.Network
-import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,12 +10,13 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodyapplication.MainViewModel
+import com.example.foodyapplication.viewmodels.MainViewModel
 import com.example.foodyapplication.R
 import com.example.foodyapplication.adapters.RecipesAdapter
 import com.example.foodyapplication.databinding.FragmentRecipiesBinding
 import com.example.foodyapplication.util.Constants.Companion.API_KEY
 import com.example.foodyapplication.util.NetworkResult
+import com.example.foodyapplication.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -27,6 +26,13 @@ class RecipiesFragment : Fragment() {
     private lateinit var binding: FragmentRecipiesBinding
     private val mAdapter by lazy { RecipesAdapter() }
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var recipesViewModel: RecipesViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        recipesViewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +44,7 @@ class RecipiesFragment : Fragment() {
             R.layout.fragment_recipies, container, false
         )
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
 
         setupRecyclerView()
         requestApiData()
@@ -47,7 +53,7 @@ class RecipiesFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        mainViewModel.getRecipes(applyQueries())
+        mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Sucess -> {
@@ -74,18 +80,7 @@ class RecipiesFragment : Fragment() {
 
     }
 
-    private fun applyQueries(): HashMap<String, String> {
-        val queries: HashMap<String, String> = HashMap()
 
-        queries["number"] = "50"
-        queries["apiKey"] = API_KEY
-        queries["type"] = "snack"
-        queries["diet"] = ""
-        queries["addRecipeInformation"] = "true"
-        queries["fillIngredients"] = "true"
-
-        return queries
-    }
 
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = mAdapter
