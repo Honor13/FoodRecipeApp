@@ -27,7 +27,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipiesFragment : Fragment() {
 
-    private lateinit var binding: FragmentRecipiesBinding
+
+
+    private var _binding: FragmentRecipiesBinding? = null
+    private val binding get() = _binding!!
+
     private val mAdapter by lazy { RecipesAdapter() }
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
@@ -44,10 +48,12 @@ class RecipiesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(
+        _binding = DataBindingUtil.inflate(
             layoutInflater,
             R.layout.fragment_recipies, container, false
         )
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel // layoutmainViewModel = mainViewModel
 
 
 
@@ -56,6 +62,16 @@ class RecipiesFragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = mAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
