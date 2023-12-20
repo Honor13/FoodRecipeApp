@@ -53,6 +53,10 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
 
+    //Data Store
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+
     // Image Loading library Coil
     implementation ("io.coil-kt:coil:0.13.0")
 
