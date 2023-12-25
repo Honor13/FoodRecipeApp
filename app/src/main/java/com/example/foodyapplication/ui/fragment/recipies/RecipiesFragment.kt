@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodyapplication.viewmodels.MainViewModel
 import com.example.foodyapplication.R
@@ -29,6 +30,7 @@ import kotlinx.coroutines.launch
 class RecipiesFragment : Fragment() {
 
 
+    private val args by navArgs<RecipiesFragmentArgs>()
 
     private var _binding: FragmentRecipiesBinding? = null
     private val binding get() = _binding!!
@@ -85,7 +87,7 @@ class RecipiesFragment : Fragment() {
     private fun readDatabase() {
        lifecycleScope.launch {
            mainViewModel.readRecipe.observeOnce(viewLifecycleOwner, { database ->
-               if (database.isNotEmpty()) {
+               if (database.isNotEmpty() && !args.backFromBottomSheet ) {
                    Log.d("Recipes Fragment", "readDatabase called")
                    mAdapter.setData(database[0].foodRecipe)
                    hideShimmerEffect()
