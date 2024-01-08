@@ -107,7 +107,6 @@
             </LinearLayout>
             </LinearLayout>
 
-
         </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
