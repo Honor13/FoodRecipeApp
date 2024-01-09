@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -18,21 +19,18 @@ import com.example.foodyapplication.viewmodels.MainViewModel
 import com.example.foodyapplication.R
 import com.example.foodyapplication.adapters.RecipesAdapter
 import com.example.foodyapplication.databinding.FragmentRecipiesBinding
-import com.example.foodyapplication.util.Constants.Companion.API_KEY
 import com.example.foodyapplication.util.NetworkListener
 import com.example.foodyapplication.util.NetworkResult
 import com.example.foodyapplication.util.observeOnce
 import com.example.foodyapplication.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @AndroidEntryPoint
-class RecipiesFragment : Fragment() {
+class RecipiesFragment : Fragment(){
 
 
     private val args by navArgs<RecipiesFragmentArgs>()
@@ -65,9 +63,22 @@ class RecipiesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel // layoutmainViewModel = mainViewModel
 
-
-
         setupRecyclerView()
+
+        binding.searchView.setOnQueryTextListener(object :OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null){
+                    searchApiData(query)
+                }
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+        })
 
         recipesViewModel.readBackOnline.observe(viewLifecycleOwner){
             recipesViewModel.backOnline = it
@@ -96,6 +107,8 @@ class RecipiesFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -155,6 +168,29 @@ class RecipiesFragment : Fragment() {
 
     }
 
+    private fun searchApiData(searchQuery: String) {
+        showShimmerEffect()
+        mainViewModel.searchRecipes(recipesViewModel.applySearchQuerry(searchQuery))
+        mainViewModel.searchedRecipesResponse.observe(viewLifecycleOwner){response->
+            when(response){
+                is NetworkResult.Sucess ->{
+                    hideShimmerEffect()
+                    val foodRecipe = response.data
+                    foodRecipe?.let { mAdapter.setData(it) }
+                }
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    loadDataFromCache()
+                    Toast.makeText(requireContext(),response.message,Toast.LENGTH_SHORT).show()
+                }
+                is NetworkResult.Loading ->{
+                    showShimmerEffect()
+                }
+            }
+
+        }
+    }
+
 
     private fun loadDataFromCache(){
        lifecycleScope.launch {
@@ -169,13 +205,18 @@ class RecipiesFragment : Fragment() {
 
     private fun showShimmerEffect() {
         binding.shimmerRV.isVisible = true
+        binding.recyclerView.visibility = View.INVISIBLE
         binding.shimmerRV.showShimmer(true)
     }
 
     private fun hideShimmerEffect() {
-        binding.shimmerRV.hideShimmer()
         binding.shimmerRV.isVisible = false
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.shimmerRV.hideShimmer()
+
     }
+
+
 
 
 }
