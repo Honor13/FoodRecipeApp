@@ -34,7 +34,6 @@ class RecipesViewModel @Inject constructor(application: Application, private val
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
     val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
 
-
     fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.saveMealAndDietType(mealType,mealTypeId,dietType,dietTypeId)
@@ -75,8 +74,6 @@ class RecipesViewModel @Inject constructor(application: Application, private val
         queries[QUERY_FILL_INGREDIENTS] = "true"
 
         return queries
-
-
     }
 
     fun showNetworkStatus(){

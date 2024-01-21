@@ -1,5 +1,6 @@
 package com.example.foodyapplication.util
 
+import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -13,3 +14,5 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
 
     })
 }
+
+

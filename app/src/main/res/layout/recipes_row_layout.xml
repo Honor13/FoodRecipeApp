@@ -11,6 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recipesRowLayout"
+        onRecipeClickListener="@{result}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -72,7 +73,7 @@
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:text="@{result.summary}"
+                    parseHrml="@{result.summary}"
                     android:textColor="@color/darkGray"
                     app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
                     app:layout_constraintStart_toStartOf="@+id/textViewTitle"
@@ -86,10 +87,10 @@
                     android:layout_marginBottom="36dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textViewHeart"
-                    app:layout_constraintHorizontal_bias="0.0"
+
                     app:layout_constraintStart_toStartOf="@+id/textViewHeart"
                     app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
-                    app:layout_constraintVertical_bias="0.075"
+
                     app:srcCompat="@drawable/ic_heart"
                     app:tint="@color/red" />
 
@@ -109,7 +110,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@+id/textViewClock"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/textViewClock"
                     app:layout_constraintTop_toTopOf="@+id/imageViewHeart"
                     app:srcCompat="@drawable/ic_clock"

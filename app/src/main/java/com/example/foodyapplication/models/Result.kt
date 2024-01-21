@@ -1,6 +1,11 @@
 package com.example.foody.models
 
+import android.os.Parcel
+import android.os.Parcelable
+import androidx.versionedparcelable.VersionedParcelize
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 
 data class Result(
     @SerializedName("aggregateLikes")
@@ -20,7 +25,7 @@ data class Result(
     @SerializedName("readyInMinutes")
     val readyInMinutes: Int,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String?,
     @SerializedName("sourceUrl")
     val sourceUrl: String,
     @SerializedName("summary")
@@ -33,4 +38,4 @@ data class Result(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
-)
+):Serializable
